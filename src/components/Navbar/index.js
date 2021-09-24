@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router'
 import { ROUTE_DASHBOARD, ROUTE_LANDING_PAGE } from 'utils/routes'
 import { authActions } from 'utils/actionTypes'
+import { local_storage_save } from 'utils/localStorage'
 
 
 const Navbar = () => {
@@ -16,6 +17,7 @@ const Navbar = () => {
     const user = useSelector(state => state.user);
     const goToDashboard = ()=> history.push(ROUTE_DASHBOARD);
     const handleLogout = ()=> {
+        local_storage_save('user', null)
         dispatch({
             type: authActions.Logout,
         })

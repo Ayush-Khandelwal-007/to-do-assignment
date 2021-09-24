@@ -2,7 +2,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background:linear-gradient(295deg, #8574EB 0%,#d2b5ff 50%, #f37cc7 100%);
 }
 .rootDiv{
   height: 100vh;

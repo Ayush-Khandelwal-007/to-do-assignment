@@ -5,6 +5,7 @@ export const authActions = {
 
   export const todoActions = {
     AddTodo: "ADD_TODO",
+    SetTodo: "SET_TODO",
     CompleteTodo: "COMPLETE_TODO",
     DeleteTodo: "DELETE_TODO"
   };

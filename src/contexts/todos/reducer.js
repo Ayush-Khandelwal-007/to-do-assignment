@@ -11,6 +11,10 @@ const todoReducer = (state = [], action) => {
                     completed: false,
                 },
             ];
+        case todoActions.SetTodo:
+                return [
+                    ...action.todos
+                ];
         case todoActions.CompleteTodo:
             return state.map(todo =>
                 todo.id === action.id ? { ...todo, completed: true } : todo,

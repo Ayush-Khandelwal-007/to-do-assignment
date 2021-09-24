@@ -1,19 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ROUTE_DASHBOARD } from 'utils/routes'
 import 'pages/LandingPage/styling.css'
 import palm from 'utils/assets/hand.svg'
 import landingIll from 'utils/assets/landingIll.svg'
 import { motion } from "framer-motion";
 import { Snackbar, TextField } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import { useHistory } from 'react-router';
 import { Alert } from '@material-ui/lab';
 import { useSelector } from 'react-redux'
 import authentication from 'utils/authentication'
 import { useDispatch } from 'react-redux'
 import { authActions } from 'utils/actionTypes'
+import { local_storage_save } from 'utils/localStorage'
 
 const LandingPage = () => {
 
@@ -30,6 +28,9 @@ const LandingPage = () => {
     const [error, setError] = useState('');
     const [openSnack, setOpenSnack] = useState(false);
 
+    useEffect(() => {
+        if(user)history.push(ROUTE_DASHBOARD)
+    },[user])
 
     const handelRegister = (e) => {
         e.preventDefault();
@@ -54,8 +55,12 @@ const LandingPage = () => {
                         password: password,
                     }
                 })
+                local_storage_save('user', {
+                    name: 'babblu',
+                    username:username,
+                    password: password,
+                })
                 setLoading(false)
-                history.push(ROUTE_DASHBOARD)
             }
         }).catch(err => {
             console.log(err)
@@ -110,10 +115,10 @@ const LandingPage = () => {
                             </div>
                             {
                                 formType === 'login' ? (
-                                    <button type='submit' disabled={loading || user} onClick={handelLogin} >Log In</button>
+                                    <button type='submit' disabled={loading} onClick={handelLogin} >Log In</button>
 
                                 ) : (
-                                    <button type='submit' disabled={loading || user} onClick={handelRegister}>Register</button>
+                                    <button type='submit' disabled={loading} onClick={handelRegister}>Register</button>
                                 )
                             }
                             <figure aria-hidden="true">

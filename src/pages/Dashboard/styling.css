@@ -1,0 +1,31 @@
+.taskScreen{
+    padding: 3rem;
+    padding-top: 8rem;
+    height: calc(100vh - 11rem);
+}
+
+.charts{
+    height: calc(100vh - 19rem);
+    background-color: rgba(255, 255, 255, 0.286);
+    border-radius: 2rem 0rem;
+    padding: 2rem;
+    position: relative;
+    overflow-y: scroll;
+}
+
+.paginationBar{
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem;
+}
+
+.tableBody{
+    cursor: pointer;
+}
+
+.dialogTitle>h2{
+    width: 100%;
+}
