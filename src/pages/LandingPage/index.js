@@ -1,74 +1,75 @@
-import React, { useEffect, useState } from 'react'
-import { ROUTE_DASHBOARD } from 'utils/routes'
-import 'pages/LandingPage/styling.css'
-import palm from 'utils/assets/hand.svg'
-import landingIll from 'utils/assets/landingIll.svg'
-import { motion } from "framer-motion";
+import React, { useEffect, useState } from 'react';
+import { ROUTE_DASHBOARD } from 'utils/routes';
+import 'pages/LandingPage/styling.css';
+import palm from 'utils/assets/hand.svg';
+import landingIll from 'utils/assets/landingIll.svg';
+import { motion } from 'framer-motion';
 import { Snackbar, TextField } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import { Alert } from '@material-ui/lab';
-import { useSelector } from 'react-redux'
-import authentication from 'utils/authentication'
-import { useDispatch } from 'react-redux'
-import { authActions } from 'utils/actionTypes'
-import { local_storage_save } from 'utils/localStorage'
+import { useSelector } from 'react-redux';
+import authentication from 'utils/authentication';
+import { useDispatch } from 'react-redux';
+import { authActions } from 'utils/actionTypes';
+import { local_storage_save } from 'utils/localStorage';
 
 const LandingPage = () => {
-
     const dispatch = useDispatch();
     const history = useHistory();
-    const user = useSelector(state => state.user);
+    const user = useSelector((state) => state.user);
     const [closeEyes, setCloseEyes] = useState(false);
     const [seePassword, setSeePassword] = useState(false);
     const [username, setUsename] = useState('');
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
-    const [formType, setFormType] = useState('login')
-    const [loading, setLoading] = useState(false)
+    const [formType, setFormType] = useState('login');
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [openSnack, setOpenSnack] = useState(false);
 
     useEffect(() => {
-        if(user)history.push(ROUTE_DASHBOARD)
-    },[history, user])
+        if (user) history.push(ROUTE_DASHBOARD);
+    }, [history, user]);
 
     const handelRegister = (e) => {
         e.preventDefault();
         setError('Right Now we dont allow new users to get into the system.');
         setOpenSnack(true);
-    }
+    };
 
     const handelLogin = (e) => {
         e.preventDefault();
-        setLoading(true)
-        setError('')
+        setLoading(true);
+        setError('');
         authentication({
             username,
             password,
-        }).then(res => {
-            if (res) {
-                dispatch({
-                    type: authActions.Login,
-                    user: {
-                        name: 'babblu',
-                        username:username,
-                        password: password,
-                    }
-                })
-                local_storage_save('user', {
-                    name: 'babblu',
-                    username:username,
-                    password: password,
-                })
-                setLoading(false)
-            }
-        }).catch(err => {
-            console.log(err)
-            setError('Invalid username or password');
-            setOpenSnack(true);
-            setLoading(false)
         })
-    }
+            .then((res) => {
+                if (res) {
+                    dispatch({
+                        type: authActions.Login,
+                        user: {
+                            name: 'babblu',
+                            username: username,
+                            password: password,
+                        },
+                    });
+                    local_storage_save('user', {
+                        name: 'babblu',
+                        username: username,
+                        password: password,
+                    });
+                    setLoading(false);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                setError('Invalid username or password');
+                setOpenSnack(true);
+                setLoading(false);
+            });
+    };
 
     const handleCloseSnack = (event, reason) => {
         if (reason === 'clickaway') {
@@ -78,61 +79,89 @@ const LandingPage = () => {
         setOpenSnack(false);
     };
     return (
-        <div className='root'>
+        <div className="root">
             <Snackbar open={openSnack} autoHideDuration={4000} onClose={handleCloseSnack}>
-                <Alert className='snackbarDiv' severity="error">
+                <Alert className="snackbarDiv" severity="error">
                     <strong>{error}</strong>
                 </Alert>
             </Snackbar>
             <div className="loginForm">
-                <div className='rootDiv'>
-                    <div className='screen'>
+                <div className="rootDiv">
+                    <div className="screen">
                         <form id="login-form" className="login-form" autoComplete="off" role="main">
-                            <div className='selectTypeMenu'>
+                            <div className="selectTypeMenu">
                                 <label className="label-username">
-                                    <TextField label="USERNAME" className="text" value={username} onChange={(e) => setUsename(e.target.value)} />
+                                    <TextField
+                                        label="USERNAME"
+                                        className="text"
+                                        value={username}
+                                        onChange={(e) => setUsename(e.target.value)}
+                                    />
                                 </label>
-                                {
-                                    formType === 'login' ? (
-                                        null
-                                    ) : (
-                                        <label className="label-username">
-                                            <TextField label="NAME" className="text" value={name} onChange={(e) => setName(e.target.value)} />
-                                        </label>
-                                    )
-                                }
+                                {formType === 'login' ? null : (
+                                    <label className="label-username">
+                                        <TextField
+                                            label="NAME"
+                                            className="text"
+                                            value={name}
+                                            onChange={(e) => setName(e.target.value)}
+                                        />
+                                    </label>
+                                )}
                             </div>
-                            <input type="checkbox" name="show-password" className="show-password a11y-hidden" id="show-password" tabIndex="3" />
+                            <input
+                                type="checkbox"
+                                name="show-password"
+                                className="show-password a11y-hidden"
+                                id="show-password"
+                                tabIndex="3"
+                            />
                             <label className="label-show-password" htmlFor="show-password">
-                                <span onClick={() => {
-                                    seePassword ? (setSeePassword(false)) : (setSeePassword(true))
-                                }}>Show Password</span>
+                                <span
+                                    onClick={() => {
+                                        seePassword ? setSeePassword(false) : setSeePassword(true);
+                                    }}
+                                >
+                                    Show Password
+                                </span>
                             </label>
                             <div>
                                 <label className="label-password">
-                                    <TextField type={seePassword ? ("text") : ("password")} label="PASSWORD" className="text" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" onBlur={() => setCloseEyes(false)} onFocus={() => setCloseEyes(true)} />
+                                    <TextField
+                                        type={seePassword ? 'text' : 'password'}
+                                        label="PASSWORD"
+                                        className="text"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        placeholder="Password"
+                                        onBlur={() => setCloseEyes(false)}
+                                        onFocus={() => setCloseEyes(true)}
+                                    />
                                 </label>
                             </div>
-                            {
-                                formType === 'login' ? (
-                                    <button type='submit' disabled={loading} onClick={handelLogin} >Log In</button>
-
-                                ) : (
-                                    <button type='submit' disabled={loading} onClick={handelRegister}>Register</button>
-                                )
-                            }
+                            {formType === 'login' ? (
+                                <button type="submit" disabled={loading} onClick={handelLogin}>
+                                    Log In
+                                </button>
+                            ) : (
+                                <button type="submit" disabled={loading} onClick={handelRegister}>
+                                    Register
+                                </button>
+                            )}
                             <figure aria-hidden="true">
                                 <div className="person-body"></div>
-                                {
-                                    closeEyes ? (
-                                        <>
-                                            <motion.div className="left-hand" animate={{ rotate: 25 }}><img src={palm} alt='palm' /></motion.div>
-                                            <motion.div className="right-hand" animate={{ rotate: -25 }}><img src={palm} alt='palm' /></motion.div>
-                                        </>
-                                    ) : (null)
-                                }
+                                {closeEyes ? (
+                                    <>
+                                        <motion.div className="left-hand" animate={{ rotate: 25 }}>
+                                            <img src={palm} alt="palm" />
+                                        </motion.div>
+                                        <motion.div className="right-hand" animate={{ rotate: -25 }}>
+                                            <img src={palm} alt="palm" />
+                                        </motion.div>
+                                    </>
+                                ) : null}
                                 <div className="neck skin"></div>
-                                <div className={seePassword ? ("head skin see") : ("head skin")}>
+                                <div className={seePassword ? 'head skin see' : 'head skin'}>
                                     <div className="eyes">
                                         <div className="pupil"></div>
                                     </div>
@@ -144,21 +173,39 @@ const LandingPage = () => {
                                 <div className="shirt-2"></div>
                             </figure>
                         </form>
-                        {
-                            formType === 'login' ? (
-                                <div>New to the System? Want to <span className='changeForm' onClick={() => { setFormType('signup') }}>Register</span></div>
-                            ) : (
-                                <div>Already Registered? Want to <span className='changeForm' onClick={() => { setFormType('login') }}>Login</span></div>
-                            )
-                        }
+                        {formType === 'login' ? (
+                            <div>
+                                New to the System? Want to{' '}
+                                <span
+                                    className="changeForm"
+                                    onClick={() => {
+                                        setFormType('signup');
+                                    }}
+                                >
+                                    Register
+                                </span>
+                            </div>
+                        ) : (
+                            <div>
+                                Already Registered? Want to{' '}
+                                <span
+                                    className="changeForm"
+                                    onClick={() => {
+                                        setFormType('login');
+                                    }}
+                                >
+                                    Login
+                                </span>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
-            <div className='diaplayImage'>
-                <img src={landingIll} alt='palm' style={{ height: '100vh', width: '50vw' }} />
+            <div className="diaplayImage">
+                <img src={landingIll} alt="palm" style={{ height: '100vh', width: '50vw' }} />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default LandingPage
+export default LandingPage;

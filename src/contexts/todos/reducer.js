@@ -1,4 +1,4 @@
-const { todoActions } = require("utils/actionTypes");
+const { todoActions } = require('utils/actionTypes');
 
 const todoReducer = (state = [], action) => {
     switch (action.type) {
@@ -12,18 +12,14 @@ const todoReducer = (state = [], action) => {
                 },
             ];
         case todoActions.SetTodo:
-                return [
-                    ...action.todos
-                ];
+            return [...action.todos];
         case todoActions.CompleteTodo:
-            return state.map(todo =>
-                todo.id === action.id ? { ...todo, completed: true } : todo,
-            );
+            return state.map((todo) => (todo.id === action.id ? { ...todo, completed: true } : todo));
         case todoActions.DeleteTodo:
-            return state.filter(todo =>todo.id === action.id);
+            return state.filter((todo) => todo.id === action.id);
         default:
             return state;
     }
-}
+};
 
 export default todoReducer;
