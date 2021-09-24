@@ -1,0 +1,21 @@
+.navBar{
+    position: absolute;
+    top: 0;
+    height:0px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.logo{
+    height: 6rem;
+    margin:1rem 1rem;
+}
+
+.navBarAction{
+    margin:1rem 1rem;
+}
+
+.navBarAction button{
+    
+}

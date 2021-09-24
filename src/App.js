@@ -1,21 +1,34 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Link } from 'react-router-dom';
+import LandingPage from 'pages/LandingPage';
+import Dashboard from 'pages/Dashboard.js';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import { authActions, todoActions } from 'utils/actionTypes';
+import ProtectedRoute from 'utils/ProtectedRoute';
+import Navbar from 'components/Navbar';
+import { ROUTE_DASHBOARD, ROUTE_LANDING_PAGE } from 'utils/routes';
 
 function App() {
+  const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch({ 
+  //     type: todoActions.AddTodo, 
+  //     id:'babblu',
+  //     text:'babblu',
+  //     completed:false,
+  //   });
+  // }, [])
   return (
     <Router>
     <div className="App">
+      <Navbar/>
       <Switch>
-        <Route exact path="/landing">
-          <h1>landing</h1>
+        <Route exact path={ROUTE_LANDING_PAGE}>
+          <LandingPage />
         </Route>
-        <Route exact path="/dashboard" >
-        <h1>dashboard</h1>
-        </Route>
-        <Route path="/">
-          <Link to="/landing">landing</Link>
-          <Link to="/dashboard">dashboard</Link>
+        <ProtectedRoute exact path={ROUTE_DASHBOARD} component={Dashboard}/>
+        <Route path='*'>
+          <Redirect to={ROUTE_DASHBOARD} />
         </Route>
       </Switch>
     </div>
