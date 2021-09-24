@@ -27,7 +27,7 @@ const Dashboard = () => {
                 })
                 console.log(res)
             })
-    }, [pageNumber])
+    }, [dispatch, pageNumber])
     return (
         <div className='taskScreen'>
             <div className='charts'>

@@ -30,7 +30,7 @@ const LandingPage = () => {
 
     useEffect(() => {
         if(user)history.push(ROUTE_DASHBOARD)
-    },[user])
+    },[history, user])
 
     const handelRegister = (e) => {
         e.preventDefault();
