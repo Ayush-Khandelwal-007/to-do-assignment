@@ -2,6 +2,13 @@
 
 If you just wanna have a look for how it look try this deployed version : [Link](https://to-do-dashboard-d8472.web.app)
 
+Right now it's only having login feature with single acceptable credentials as below:
+
+```
+Username: manager
+Password: pass123
+```
+
 ## Download project
 Clone this repository on your device localy as per the below instructions. 
 
